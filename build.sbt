@@ -12,9 +12,35 @@ lazy val root = (project in file("."))
   .settings(
     name := "serviver-chat-play",
     libraryDependencies += guice,
+  )
+  .dependsOn(
+    models,
+    application,
+    infra
+  )
+
+lazy val models = (project in file("mdoels"))
+  .settings(
+    name := "serviver-chat-play-models",
+  )
+
+lazy val application = (project in file("application"))
+  .enablePlugins(PlayScala)
+  .settings(
+    name := "serviver-chat-play-application",
     libraryDependencies += scalaTestPlusPlay % Test,
-    libraryDependencies += mysql,
+    libraryDependencies ++= circe,
+  )
+  .dependsOn(models)
+
+lazy val infra = (project in file("infra"))
+  .enablePlugins(PlayScala)
+  .settings(
+    name := "serviver-chat-play-infra",
     libraryDependencies ++= scalikejdbc,
     libraryDependencies += awsJavaSdkDynamoDB,
-    libraryDependencies ++= circe,
+  )
+  .dependsOn(
+    models,
+    application
   )
