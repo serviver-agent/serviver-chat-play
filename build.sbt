@@ -16,4 +16,5 @@ lazy val root = (project in file("."))
     libraryDependencies += mysql,
     libraryDependencies ++= scalikejdbc,
     libraryDependencies += awsJavaSdkDynamoDB,
+    libraryDependencies ++= circe,
   )

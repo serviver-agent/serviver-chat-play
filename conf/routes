@@ -10,6 +10,7 @@ GET     /health                     controllers.HealthController.check
 POST    /auth/login                 controllers.AuthController.login
 POST    /auth/logout                controllers.AuthController.logout
 
+GET     /users                      controllers.UserController.all
 GET     /users/:id                  controllers.UserController.show(id: String)
 POST    /users/create               controllers.UserController.create
 
