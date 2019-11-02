@@ -1,6 +1,3 @@
-create database if not exists `serviver-chat`;
-use `serviver-chat`;
-
 drop table if exists `users`;
 create table if not exists `users`
 (

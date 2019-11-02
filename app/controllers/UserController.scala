@@ -45,7 +45,7 @@ class UserController @Inject() (
 
 object UserController {
 
-  implicit val userIdEncoder: Encoder[UserId] = Encoder[String].contramap(_.uuid.toString)
+  implicit val userIdEncoder: Encoder[UserId] = Encoder[String].contramap(_.display)
   implicit val userEncoder: Encoder[User] = Encoder.instance { user =>
     Json.obj(
       "id"   -> user.id.asJson,

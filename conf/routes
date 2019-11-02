@@ -12,11 +12,11 @@ POST    /auth/logout                controllers.AuthController.logout
 
 GET     /users                      controllers.UserController.all
 GET     /users/:id                  controllers.UserController.show(id: String)
-POST    /users/create               controllers.UserController.create
+PUT     /users                      controllers.UserController.create
 
 GET     /channels                   controllers.ChannelController.all
 GET     /channels/:id               controllers.ChannelController.show(id: String)
-POST    /channels/create            controllers.ChannelController.create
+PUT     /channels                   controllers.ChannelController.create
 
-GET     /messages/:channelId        controllers.MessageController.getMessages(channelId: String)
-POST    /messages/:channelId        controllers.MessageController.post(channelId: String)
+GET     /channels/:id/messages      controllers.MessageController.getMessages(channelId: String)
+PUT     /channels/:id/messages      controllers.MessageController.post(channelId: String)

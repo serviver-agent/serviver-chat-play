@@ -2,7 +2,9 @@ package models
 
 import java.util.UUID
 
-case class UserId(uuid: UUID)
+case class UserId(uuid: UUID) {
+  def display = uuid.toString
+}
 object UserId {
   def createFromString(str: String): UserId = {
     UserId(UUID.fromString(str))
