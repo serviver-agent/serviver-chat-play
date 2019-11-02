@@ -6,3 +6,16 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 GET     /health                     controllers.HealthController.check
+
+POST    /auth/login                 controllers.AuthController.login
+POST    /auth/logout                controllers.AuthController.logout
+
+GET     /users/:id                  controllers.UserController.show(id: String)
+POST    /users/create               controllers.UserController.create
+
+GET     /channels                   controllers.ChannelController.all
+GET     /channels/:id               controllers.ChannelController.show(id: String)
+POST    /channels/create            controllers.ChannelController.create
+
+GET     /messages/:channelId        controllers.MessageController.getMessages(channelId: String)
+POST    /messages/:channelId        controllers.MessageController.post(channelId: String)

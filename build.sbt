@@ -10,7 +10,7 @@ scalacOptions in (Compile, console) ~= {_.filterNot(_ == "-Xlint")}
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
-    name := "serviver-caht-play",
+    name := "serviver-chat-play",
     libraryDependencies += guice,
     libraryDependencies += scalaTestPlusPlay % Test,
     libraryDependencies += mysql,
