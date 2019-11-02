@@ -11,8 +11,8 @@ import io.circe.syntax._
 
 @Singleton
 class ChannelController @Inject() (
-  cc: ControllerComponents,
-  channelRepository: ChannelRepository
+    cc: ControllerComponents,
+    channelRepository: ChannelRepository
 ) extends AbstractController(cc) {
 
   import ChannelController._
@@ -25,7 +25,7 @@ class ChannelController @Inject() (
   def show(id: String) = Action {
     val channelId = ChannelId.createFromString(id)
     channelRepository.findBy(channelId) match {
-      case None       => NotFound
+      case None          => NotFound
       case Some(channel) => Ok(channel.asJson)
     }
   }

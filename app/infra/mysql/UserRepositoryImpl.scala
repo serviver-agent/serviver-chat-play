@@ -22,8 +22,7 @@ class UserRepositoryImpl extends UserRepository {
     val id = userId.display
     val records = DB.readOnly { implicit session =>
       withSQL {
-        select(u.result.*).from(UsersTable as u)
-          .where.eq(u.id, id)
+        select(u.result.*).from(UsersTable as u).where.eq(u.id, id)
       }.map(UserRecord(u.resultName)).single.apply()
     }
     records.map(_.toEntity)

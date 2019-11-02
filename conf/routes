@@ -18,5 +18,5 @@ GET     /channels                   controllers.ChannelController.all
 GET     /channels/:id               controllers.ChannelController.show(id: String)
 PUT     /channels                   controllers.ChannelController.create
 
-GET     /channels/:id/messages      controllers.MessageController.getMessages(channelId: String)
-PUT     /channels/:id/messages      controllers.MessageController.post(channelId: String)
+GET     /channels/:channelId/messages      controllers.MessageController.getMessages(channelId: String)
+PUT     /channels/:channelId/messages      controllers.MessageController.post(channelId: String)

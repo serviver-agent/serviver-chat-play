@@ -22,8 +22,7 @@ class ChannelRepositoryImpl extends ChannelRepository {
     val id = channelId.display
     val records = DB.readOnly { implicit session =>
       withSQL {
-        select(c.result.*).from(ChannelsTable as c)
-          .where.eq(c.id, id)
+        select(c.result.*).from(ChannelsTable as c).where.eq(c.id, id)
       }.map(ChannelRecord(c.resultName)).single.apply()
     }
     records.map(_.toEntity)
