@@ -18,25 +18,32 @@ lazy val root = (project in file("."))
     application,
     infra
   )
+  .aggregate(
+    models,
+    application,
+    infra
+  )
 
-lazy val models = (project in file("mdoels"))
+lazy val models = (project in file("models"))
   .settings(
     name := "serviver-chat-play-models",
+    libraryDependencies += scalatest % Test,
   )
 
 lazy val application = (project in file("application"))
-  .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play-application",
+    libraryDependencies += playframework,
     libraryDependencies += scalaTestPlusPlay % Test,
     libraryDependencies ++= circe,
   )
   .dependsOn(models)
 
 lazy val infra = (project in file("infra"))
-  .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play-infra",
+    libraryDependencies += scalatest % Test,
+    libraryDependencies += mysql,
     libraryDependencies ++= scalikejdbc,
     libraryDependencies += awsJavaSdkDynamoDB,
   )

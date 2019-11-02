@@ -1,5 +1,7 @@
 import com.google.inject.AbstractModule
 
+import utils.HealthChecker
+import infra.mysql.common.HealthCheckerImpl
 import models.UserRepository
 import infra.mysql.UserRepositoryImpl
 import models.ChannelRepository
@@ -11,6 +13,7 @@ import configs.{DynamoConfig, DynamoConfigImpl}
 
 class Module extends AbstractModule {
   override def configure(): Unit = {
+    bind(classOf[HealthChecker]).to(classOf[HealthCheckerImpl])
     bind(classOf[UserRepository]).to(classOf[UserRepositoryImpl])
     bind(classOf[ChannelRepository]).to(classOf[ChannelRepositoryImpl])
     bind(classOf[UserTokenRepository]).to(classOf[UserTokenRepositoryImpl])

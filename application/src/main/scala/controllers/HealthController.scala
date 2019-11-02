@@ -3,22 +3,20 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 
-import scalikejdbc._
-import scalikejdbc.config._
+import utils.HealthChecker
 
 @Singleton
-class HealthController @Inject() (cc: ControllerComponents) extends AbstractController(cc) {
-
-  DBs.setupAll()
+class HealthController @Inject() (
+    cc: ControllerComponents,
+    healthChecker: HealthChecker
+) extends AbstractController(cc) {
 
   def check() = Action {
 
-    val sel = DB localTx { implicit session =>
-      sql"select 1".execute.apply()
-    }
-
-    if (sel) Ok
+    if (healthChecker.check()) Ok
     else InternalServerError
+
+    Ok
 
   }
 
