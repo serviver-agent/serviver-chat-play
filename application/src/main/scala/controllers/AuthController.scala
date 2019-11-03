@@ -37,7 +37,7 @@ class AuthController @Inject() (
       verifiedUserId <- userAuthService.authenticate(userAuth).toEither(Unauthorized)
     } yield {
       val verifiedUserToken = userTokenService.create(verifiedUserId)
-      val response = AuthLoginResponse.fromToken(verifiedUserToken)
+      val response          = AuthLoginResponse.fromToken(verifiedUserToken)
       Ok(response.asJson)
     }
     e.merge
