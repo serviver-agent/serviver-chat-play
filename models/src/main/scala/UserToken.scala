@@ -1,6 +1,8 @@
 package models
 
-case class UserToken(value: String)
+case class UserToken(value: String) {
+  def display: String = value.toString
+}
 
 object UserToken {
 
