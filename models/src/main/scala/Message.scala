@@ -1,6 +1,7 @@
 package models
 
 import java.util.UUID
+import models.user.UserId
 
 case class MessageId(uuid: UUID) {
   def display = uuid.toString

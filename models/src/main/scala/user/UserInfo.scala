@@ -1,52 +1,16 @@
-package models
-
-import java.util.UUID
+package models.user
 
 import models.utils.ErrorUtils
-
-// case class UserId(uuid: UUID) {
-//   def display = uuid.toString
-// }
-// object UserId {
-//   def createFromString(str: String): UserId = {
-//     UserId(UUID.fromString(str))
-//   }
-// }
-
-// case class User(id: UserId, name: String)
-// object User {
-//   def createFromName(name: String): User = {
-//     val id = UserId(UUID.randomUUID())
-//     User(id, name)
-//   }
-// }
-
-// 命名をあとでUserする
-
-trait UserId {
-  def uuid: UUID
-  final def display: String = uuid.toString
-}
-trait UnverifiedUserId extends UserId
-object UnverifiedUserId {
-  def fromString(userIdStr: String): UnverifiedUserId = {
-    new UnverifiedUserId {
-      override def uuid = UUID.fromString(userIdStr)
-    }
-  }
-}
-trait VerifiedUserId extends UserId
-
-trait _UserId {
-  def userId: UserId
-}
-
-// trait User
 
 trait UserInfo {
   def name: UserInfo.UserName
   def imageUrl: UserInfo.UserImageUrl
 }
+
+trait _UserInfo {
+  def userInfo: UserInfo
+}
+
 object UserInfo {
 
   def create(userNameStr: String, imageUrlStr: String): Either[List[Exception], UserInfo] = {
@@ -61,7 +25,6 @@ object UserInfo {
         override def imageUrl = i
       }
     )
-
   }
 
   sealed abstract case class UserName(value: String)
@@ -109,87 +72,4 @@ object UserInfo {
       ErrorUtils.collectErrors(imageUrlStr, ErrorDefs.errDefs, createOnSuccess)
     }
   }
-}
-trait _UserInfo {
-  def userInfo: UserInfo
-}
-
-trait UserAuthentication {
-  def email: String
-  def hashedPassword: String
-}
-trait _UserAuthentication {
-  def userAuthentication: UserAuthentication
-}
-
-trait UserToken {
-  def value: String
-}
-trait _UserToken {
-  def userToken: UserToken
-}
-
-trait UserAll
-  extends _UserInfo
-  with _UserAuthentication
-
-object UserAll {
-
-}
-
-object Hoge {
-
-  val hoge: User with _UserInfo = new User with _UserInfo {
-    val userId = new UserId {
-      val uuid = UUID.randomUUID()
-    }
-    val userInfo = new UserInfo {
-      val name = "みやしー"
-      val imageUrl = "riho.jpg"
-    }
-  }
-
-}
-
-trait UserInfoRepository {
-  def save(): Unit
-}
-trait UserAuthRepository {
-  def save(): Unit
-}
-
-trait UserRegisterServive {
-
-  def userInfoRepository: UserInfoRepository
-  def userAuthRepository: UserAuthRepository
-
-  def create(request: UserCreateRequest): Unit = {
-
-  }
-
-}
-object UserRegisterServive {
-  class UserCreateRequest(
-    userName: String,
-    email: String,
-    rawPassword: String
-  )
-}
-
-trait UserAuthenticationService {
-  def authenticate(userAuth: UserAuthentication): UserId
-}
-
-trait UserTokenService {
-
-  def create(userId: UserId): UserToken
-  def findBy(userToken: UserToken): Option[UserId]
-  def delete(userToken: UserToken): Unit
-
-}
-
-trait UserInfoService {
-
-  def findBy(userId: UserId): UserId with UserInfo
-
 }
