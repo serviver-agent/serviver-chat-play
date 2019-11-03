@@ -1,4 +1,4 @@
-package auth
+package application.auth
 
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import models.user.service.UserTokenService
 
 import play.api.mvc.Results
 
-import utils.OptionUtils.MyOption
+import application.utils.OptionUtils.MyOption
 
 class UserRefiner @Inject() (
     ec: ExecutionContext,

@@ -1,7 +1,7 @@
 package infra.dynamo.common
 
 import javax.inject.{Singleton, Inject}
-import configs.DynamoConfig
+import application.configs.DynamoConfig
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration

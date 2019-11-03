@@ -1,11 +1,11 @@
-package controllers
+package application.controllers
 
 import javax.inject._
 import play.api.mvc._
 
 import models.{Channel, ChannelId, ChannelRepository}
-import utils.FormUtils._
-import utils.CirceUtils._
+import application.utils.FormUtils._
+import application.utils.CirceUtils._
 import io.circe.{Json, Encoder}
 import io.circe.syntax._
 

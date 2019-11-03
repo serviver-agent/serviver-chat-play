@@ -1,4 +1,4 @@
-package controllers
+package application.controllers
 
 import javax.inject._
 import play.api.mvc._
@@ -8,8 +8,8 @@ import models.user._
 import models.user.service._
 import models.user.service.UserRegisterService.UserCreateRequest
 
-import utils.FormUtils._
-import utils.CirceUtils._
+import application.utils.FormUtils._
+import application.utils.CirceUtils._
 import io.circe.generic.auto._
 import io.circe.syntax._
 

@@ -4,19 +4,19 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
-GET     /health                     controllers.HealthController.check
+GET     /                           application.controllers.HomeController.index
+GET     /health                     application.controllers.HealthController.check
 
-POST    /auth/login                 controllers.AuthController.login
-POST    /auth/logout                controllers.AuthController.logout
+POST    /auth/login                 application.controllers.AuthController.login
+POST    /auth/logout                application.controllers.AuthController.logout
 
-GET     /users                      controllers.UserController.findAll
-GET     /users/:id                  controllers.UserController.findBy(id: String)
-PUT     /users                      controllers.UserController.create
+GET     /users                      application.controllers.UserController.findAll
+GET     /users/:id                  application.controllers.UserController.findBy(id: String)
+PUT     /users                      application.controllers.UserController.create
 
-GET     /channels                   controllers.ChannelController.all
-GET     /channels/:id               controllers.ChannelController.show(id: String)
-PUT     /channels                   controllers.ChannelController.create
+GET     /channels                   application.controllers.ChannelController.all
+GET     /channels/:id               application.controllers.ChannelController.show(id: String)
+PUT     /channels                   application.controllers.ChannelController.create
 
-GET     /channels/:channelId/messages      controllers.MessageController.getMessages(channelId: String)
-PUT     /channels/:channelId/messages      controllers.MessageController.post(channelId: String)
+GET     /channels/:channelId/messages      application.controllers.MessageController.getMessages(channelId: String)
+PUT     /channels/:channelId/messages      application.controllers.MessageController.post(channelId: String)
