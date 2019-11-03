@@ -4,6 +4,9 @@ import javax.inject._
 import play.api.mvc._
 
 import models.{User, UserId, UserRepository}
+import models.user.service.UserRegisterServive
+import models.user.service.UserRegisterServive.UserCreateRequest
+
 import utils.FormUtils._
 import utils.CirceUtils._
 import io.circe.{Json, Encoder}
@@ -12,7 +15,8 @@ import io.circe.syntax._
 @Singleton
 class UserController @Inject() (
     cc: ControllerComponents,
-    userRepository: UserRepository
+    userRepository: UserRepository,
+    userRegisterService: UserRegisterServive
 ) extends AbstractController(cc) {
 
   import UserController._
@@ -41,6 +45,17 @@ class UserController @Inject() (
       .merge
   }
 
+  def create2() = Action { httpRequest =>
+    bindFromRequest(CreateUserForm.form)(httpRequest).left
+      .map { request =>
+        userRegisterService.create(request) match {
+          case Left(es) => ??? // ここでどうやって出力するのか迷うから意味ねえって気がしてきた
+          case Right(_) => Ok
+        }
+      }
+      .merge
+  }
+
 }
 
 object UserController {
@@ -62,6 +77,19 @@ object UserController {
       mapping(
         "name" -> nonEmptyText(minLength = 1, maxLength = 32)
       )(CreateUserForm.apply)(CreateUserForm.unapply)
+    )
+  }
+
+  val userCreateForm: Form[UserCreateRequest] = {
+    import models.user.UserInfo.{MinLength, MaxLength}
+
+    form(
+      mapping(
+        "userName" -> nonEmptyText(minLength = MinLength, maxLength = MaxLength),
+        "imageUrl" -> nomEmptyText,
+        "email" -> email,
+        "rawPassword" -> nomEmptyText
+      )(UserCreateRequest.apply)(UserCreateRequest.unapply)
     )
   }
 
