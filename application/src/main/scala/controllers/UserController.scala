@@ -47,6 +47,7 @@ class UserController @Inject() (
 
   def create2() = Action { httpRequest =>
     bindFromRequest(CreateUserForm.form)(httpRequest).left
+      .map(_ => BadRequest)
       .map { request =>
         userRegisterService.create(request) match {
           case Left(es) => ??? // ここでどうやって出力するのか迷うから意味ねえって気がしてきた
@@ -85,9 +86,9 @@ object UserController {
 
     form(
       mapping(
-        "userName" -> nonEmptyText(minLength = MinLength, maxLength = MaxLength),
-        "imageUrl" -> nomEmptyText,
-        "email" -> email,
+        "userName"    -> nonEmptyText(minLength = MinLength, maxLength = MaxLength),
+        "imageUrl"    -> nomEmptyText,
+        "email"       -> email,
         "rawPassword" -> nomEmptyText
       )(UserCreateRequest.apply)(UserCreateRequest.unapply)
     )
