@@ -9,6 +9,7 @@ scalacOptions in (Compile, console) ~= {_.filterNot(_ == "-Xlint")}
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
+  .disablePlugins(PlayLayoutPlugin)
   .settings(
     name := "serviver-chat-play",
     libraryDependencies += guice,
@@ -31,6 +32,8 @@ lazy val models = (project in file("models"))
   )
 
 lazy val application = (project in file("application"))
+  .enablePlugins(PlayScala)
+  .disablePlugins(PlayLayoutPlugin)
   .settings(
     name := "serviver-chat-play-application",
     libraryDependencies += playframework,
