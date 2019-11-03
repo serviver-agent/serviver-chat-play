@@ -13,21 +13,22 @@ import io.circe.syntax._
 
 @Singleton
 class AuthController @Inject() (
-  cc: ControllerComponents,
-  userTokenRepository: UserTokenRepository
-) extends AbstractController(cc) with I18nSupport {
+    cc: ControllerComponents,
+    userTokenRepository: UserTokenRepository
+) extends AbstractController(cc)
+    with I18nSupport {
 
   implicit val messages = messagesApi.preferred(Seq(Lang.defaultLang))
 
   import AuthController._
 
   def login() = Action { request =>
-    bindFromRequest(AuthLoginRequest.form)(request)
-      .left.map(badForm => BadRequest(badForm.errorsAsJson))
+    bindFromRequest(AuthLoginRequest.form)(request).left
+      .map(badForm => BadRequest(badForm.errorsAsJson))
       .map { form =>
         val userId: UserId = ??? // FIXMe
-        val userToken = userTokenRepository.create(userId)
-        val response = AuthLoginResponse(userToken)
+        val userToken      = userTokenRepository.create(userId)
+        val response       = AuthLoginResponse(userToken)
         Ok(response.asJson)
       }
       .merge
@@ -48,7 +49,7 @@ object AuthController {
 
     val form: Form[AuthLoginRequest] = Form(
       mapping(
-        "email" -> email,
+        "email"       -> email,
         "rawPassword" -> nonEmptyText(minLength = 1, maxLength = 32)
       )(AuthLoginRequest.apply)(AuthLoginRequest.unapply)
     )

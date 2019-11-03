@@ -15,15 +15,16 @@ object UserInfo {
 
   def create(userNameStr: String, imageUrlStr: String): Either[List[Exception], UserInfo] = {
 
-    val maybeUserName: Either[List[Exception], UserName] = UserName.create(userNameStr)
+    val maybeUserName: Either[List[Exception], UserName]     = UserName.create(userNameStr)
     val maybeImageUrl: Either[List[Exception], UserImageUrl] = UserImageUrl.create(imageUrlStr)
 
     ErrorUtils.aggregateEitherLists2(
       (maybeUserName, maybeImageUrl),
-      (n: UserName, i: UserImageUrl) => new UserInfo {
-        override def name = n
-        override def imageUrl = i
-      }
+      (n: UserName, i: UserImageUrl) =>
+        new UserInfo {
+          override def name     = n
+          override def imageUrl = i
+        }
     )
   }
 
@@ -50,7 +51,7 @@ object UserInfo {
   sealed abstract case class UserImageUrl(value: String)
   object UserImageUrl {
     import scala.util.matching.Regex
-    val MaxLength = 512
+    val MaxLength  = 512
     val UrlPattern = """^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$""".r
 
     object ErrorDefs {

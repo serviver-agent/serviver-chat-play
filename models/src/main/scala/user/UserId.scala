@@ -30,4 +30,3 @@ object UnverifiedUserId {
 trait _UserId {
   def userId: UserId
 }
-

@@ -12,7 +12,7 @@ trait _UserToken {
 object UserToken {
 
   val TokenLength = 64
-  val Prefix = "Bearer "
+  val Prefix      = "Bearer "
 
   def createRandomToken(): UserToken = {
     import util.Random
@@ -22,7 +22,7 @@ object UserToken {
       ('0' to '9').toList :::
       List('-', '.', '_', '~', '+', '/')).toArray
     val tsLen = ts.length
-    val str = Prefix + List.fill(TokenLength - Prefix.length)(ts(Random.nextInt(tsLen))).mkString
+    val str   = Prefix + List.fill(TokenLength - Prefix.length)(ts(Random.nextInt(tsLen))).mkString
 
     new UserToken {
       val value = str
