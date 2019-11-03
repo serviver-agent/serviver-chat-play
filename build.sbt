@@ -28,6 +28,7 @@ lazy val models = (project in file("models"))
   .settings(
     name := "serviver-chat-play-models",
     libraryDependencies += scalatest % Test,
+    libraryDependencies += javaxInject,
   )
 
 lazy val application = (project in file("application"))

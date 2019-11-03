@@ -7,3 +7,9 @@ trait UserAuth {
 trait _UserAuth {
   def userAuth: UserAuth
 }
+
+object UserAuth {
+
+  def create(emailStr: String, rawPassword: String): Either[List[Exception], UserAuth] = ???
+
+}
