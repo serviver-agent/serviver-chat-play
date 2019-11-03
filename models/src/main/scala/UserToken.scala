@@ -1,25 +1,25 @@
-package models
+// package models
 
-case class UserToken(value: String) {
-  def display: String = value.toString
-}
+// case class UserToken(value: String) {
+//   def display: String = value.toString
+// }
 
-object UserToken {
+// object UserToken {
 
-  val TokenLength = 64
+//   val TokenLength = 64
 
-  def createRandomToken(): UserToken = {
-    import util.Random
+//   def createRandomToken(): UserToken = {
+//     import util.Random
 
-    val ts = (('A' to 'Z').toList :::
-      ('a' to 'z').toList :::
-      ('0' to '9').toList :::
-      List('-', '.', '_', '~', '+', '/')).toArray
+//     val ts = (('A' to 'Z').toList :::
+//       ('a' to 'z').toList :::
+//       ('0' to '9').toList :::
+//       List('-', '.', '_', '~', '+', '/')).toArray
 
-    val tsLen = ts.length
+//     val tsLen = ts.length
 
-    val str = "Bearer " + List.fill(TokenLength)(ts(Random.nextInt(tsLen))).mkString
-    UserToken(str)
-  }
+//     val str = "Bearer " + List.fill(TokenLength)(ts(Random.nextInt(tsLen))).mkString
+//     UserToken(str)
+//   }
 
-}
+// }

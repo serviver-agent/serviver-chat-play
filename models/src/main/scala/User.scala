@@ -2,6 +2,8 @@ package models
 
 import java.util.UUID
 
+import models.utils.ErrorUtils
+
 // case class UserId(uuid: UUID) {
 //   def display = uuid.toString
 // }
@@ -20,8 +22,6 @@ import java.util.UUID
 // }
 
 // 命名をあとでUserする
-
-
 
 trait UserId {
   def uuid: UUID
@@ -44,25 +44,43 @@ trait _UserId {
 // trait User
 
 trait UserInfo {
-  def name: UserName
-  def imageUrl: UserImageUrl
+  def name: UserInfo.UserName
+  def imageUrl: UserInfo.UserImageUrl
 }
 object UserInfo {
-  def create(userNameStr: String): Either[Exception, UserName] = {
-    UserName.create(userNameStr).map { userName =>
-      new UserInfo {
-        val name = userName
+
+  def create(userNameStr: String, imageUrlStr: String): Either[List[Exception], UserInfo] = {
+
+    val maybeUserName: Either[List[Exception], UserName] = UserName.create(userNameStr)
+    val maybeImageUrl: Either[List[Exception], UserImageUrl] = UserImageUrl.create(imageUrlStr)
+
+    ErrorUtils.aggregateEitherLists2(
+      (maybeUserName, maybeImageUrl),
+      (n: UserName, i: UserImageUrl) => new UserInfo {
+        override def name = n
+        override def imageUrl = i
       }
-    }
+    )
+
   }
 
   sealed abstract case class UserName(value: String)
   object UserName {
     val MaxLength = 32
+
+    object ErrorDefs {
+      val userNameLengthErrorOption: String => Option[Exception] = { userNameStr =>
+        if (userNameStr.length <= MaxLength) None
+        else Some(new Exception("32文字以下じゃないといけないやつ"))
+      }
+
+      val errDefs: List[String => Option[Exception]] = (userNameLengthErrorOption :: Nil)
+    }
+
+    private val createOnSuccess: String => UserName = userNameStr => new UserName(userNameStr) {}
+
     def create(userNameStr: String): Either[List[Exception], UserName] = {
-      if (userNameStr.length > MaxLength) Left(new Exception("32文字以下じゃないといけないやつ") :: Nil)
-      else UserName(userNameStr)
-      // fixme
+      ErrorUtils.collectErrors(userNameStr, ErrorDefs.errDefs, createOnSuccess)
     }
   }
 
@@ -70,27 +88,25 @@ object UserInfo {
   object UserImageUrl {
     import scala.util.matching.Regex
     val MaxLength = 512
-    val urlPattern = """^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$""".r
+    val UrlPattern = """^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$""".r
 
-    def create(imageUrlStr: String): Either[List[Exception], UserName] = {
-      val urlLengthErrorOption: Option[Exception] = {
+    object ErrorDefs {
+      val urlLengthErrorOption: String => Option[Exception] = { imageUrlStr =>
         if (imageUrlStr.length <= MaxLength) None
         else Some(new Exception("512文字以下じゃないといけないやつ"))
       }
-      val urlErrorOption: Option[Exception] = {
-        if (urlPattern.matches(imageUrlStr)) None
+      val urlErrorOption: String => Option[Exception] = { imageUrlStr =>
+        if (UrlPattern.matches(imageUrlStr)) None
         else Some(new Exception("URLの形式がダメなやつ"))
       }
 
-      val os: List[Exception] = (urlLengthErrorOption :: urlErrorOption :: Nil).flatMap {
-        case Some(error) => List(error)
-        case None => Nil
-      }
-      val res: Either[List[Throwable, UserImageUrl]] = os match {
-        case es :: Nil => Left(es)
-        case Nil => Right(UserImageUrl(imageUrlStr))
-      }
-      res
+      val errDefs: List[String => Option[Exception]] = (urlLengthErrorOption :: urlErrorOption :: Nil)
+    }
+
+    private val createOnSuccess: String => UserImageUrl = imageUrlStr => new UserImageUrl(imageUrlStr) {}
+
+    def create(imageUrlStr: String): Either[List[Exception], UserImageUrl] = {
+      ErrorUtils.collectErrors(imageUrlStr, ErrorDefs.errDefs, createOnSuccess)
     }
   }
 }
