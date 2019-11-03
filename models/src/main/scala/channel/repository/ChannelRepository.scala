@@ -1,4 +1,6 @@
-package models
+package models.channel.repository
+
+import models.channel._
 
 trait ChannelRepository {
   def findAll(): List[Channel]

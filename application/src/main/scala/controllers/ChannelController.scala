@@ -3,7 +3,8 @@ package application.controllers
 import javax.inject._
 import play.api.mvc._
 
-import models.{Channel, ChannelId, ChannelRepository}
+import models.channel.{Channel, ChannelId}
+import models.channel.repository.ChannelRepository
 import application.utils.FormUtils._
 import application.utils.CirceUtils._
 import io.circe.{Json, Encoder}

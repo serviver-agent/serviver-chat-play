@@ -1,4 +1,4 @@
-package models
+package models.channel
 
 import java.util.UUID
 

@@ -4,7 +4,7 @@ import application.utils.HealthChecker
 import infra.mysql.common.HealthCheckerImpl
 // import models.UserRepository // TODO
 // import infra.mysql.UserRepositoryImpl // TODO
-import models.ChannelRepository
+import models.channel.repository.ChannelRepository
 import infra.mysql.ChannelRepositoryImpl
 import models.user.repository.UserTokenRepository
 import infra.dynamo.UserTokenRepositoryImpl

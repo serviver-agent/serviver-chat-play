@@ -1,6 +1,7 @@
 package infra.mysql
 
-import models.{Channel, ChannelId, ChannelRepository}
+import models.channel.{Channel, ChannelId}
+import models.channel.repository.ChannelRepository
 import scalikejdbc._
 
 class ChannelRepositoryImpl extends ChannelRepository {
