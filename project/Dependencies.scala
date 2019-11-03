@@ -16,4 +16,6 @@ object Dependencies {
     "io.circe" %% "circe-generic" % "0.12.0-M3",
     "io.circe" %% "circe-parser" % "0.12.0-M3"
   )
+  lazy val javaxInject = "javax.inject" % "javax.inject" % "1"
+  lazy val springSecurityWeb = "org.springframework.security" % "spring-security-web" % "5.2.0.RELEASE"
 }

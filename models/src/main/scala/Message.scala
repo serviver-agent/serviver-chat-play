@@ -1,6 +1,7 @@
 package models
 
 import java.util.UUID
+import models.user.VerifiedUserId
 
 case class MessageId(uuid: UUID) {
   def display = uuid.toString
@@ -11,9 +12,9 @@ object MessageId {
   }
 }
 
-case class Message(id: MessageId, userId: UserId, body: MessageBody)
+case class Message(id: MessageId, userId: VerifiedUserId, body: MessageBody)
 object Message {
-  def create(userId: UserId, rawBody: String): Either[MessageError, Message] = {
+  def create(userId: VerifiedUserId, rawBody: String): Either[MessageError, Message] = {
     val id         = MessageId(UUID.randomUUID())
     val bodyEither = MessageBody.create(rawBody)
     bodyEither.map { body =>
