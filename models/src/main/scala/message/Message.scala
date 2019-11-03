@@ -1,4 +1,4 @@
-package models
+package models.message
 
 import java.util.UUID
 import models.user.VerifiedUserId
