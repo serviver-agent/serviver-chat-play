@@ -2,7 +2,11 @@ package infra.dynamo
 
 import javax.inject.{Singleton, Inject}
 import infra.dynamo.common.DynamoDBFactory
-import models.{UserId, UserToken, UserTokenRepository}
+
+import java.util.UUID
+
+import models.user._
+import models.user.repository.UserTokenRepository
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB
 
@@ -15,7 +19,7 @@ class UserTokenRepositoryImpl @Inject() (
 
   import UserTokenRepositoryImpl._
 
-  override def findBy(userToken: UserToken): Option[UserId] = {
+  override def findBy(userToken: UnverifiedUserToken): Option[VerifiedUserId] = {
     import com.amazonaws.services.dynamodbv2.model.GetItemRequest
     import com.amazonaws.services.dynamodbv2.model.GetItemResult
 
@@ -26,20 +30,20 @@ class UserTokenRepositoryImpl @Inject() (
     if (result.getItem.size == 0) None
     else {
       val record = UserTokenRecord.fromAttributeValues(result.getItem)
-      Some(UserId.createFromString(record.userId))
+      Some(VerifiedUserId(UUID.fromString(record.userId)))
     }
   }
 
-  override def create(userId: UserId): UserToken = {
+  override def create(userId: VerifiedUserId): VerifiedUserToken = {
     import com.amazonaws.services.dynamodbv2.model.PutItemRequest
 
-    val userToken       = UserToken.createRandomToken()
+    val userToken       = GeneratedUserToken.createRandomToken()
     val userTokenRecord = UserTokenRecord.fromEntity(userToken, userId)
 
     val request = new PutItemRequest(UserTokensTable.TableName, userTokenRecord.toAttributeValues)
     dynamoDB.putItem(request)
 
-    userToken
+    VerifiedUserToken(userToken.value)
   }
 
   override def delete(userToken: UserToken): Unit = {
@@ -50,6 +54,8 @@ class UserTokenRepositoryImpl @Inject() (
     val request = new DeleteItemRequest(UserTokensTable.TableName, key)
     dynamoDB.deleteItem(request)
   }
+
+  override def deleteBy(userId: VerifiedUserId): Unit = ??? // TODO
 
 }
 

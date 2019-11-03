@@ -10,8 +10,8 @@ GET     /health                     controllers.HealthController.check
 POST    /auth/login                 controllers.AuthController.login
 POST    /auth/logout                controllers.AuthController.logout
 
-GET     /users                      controllers.UserController.all
-GET     /users/:id                  controllers.UserController.show(id: String)
+GET     /users                      controllers.UserController.findAll
+GET     /users/:id                  controllers.UserController.findBy(id: String)
 PUT     /users                      controllers.UserController.create
 
 GET     /channels                   controllers.ChannelController.all

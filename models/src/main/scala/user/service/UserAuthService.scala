@@ -6,7 +6,7 @@ import models.user._
 import models.user.repository._
 
 @Singleton
-class UserAuthenticationService @Inject() (
+class UserAuthService @Inject() (
     repository: UserAuthRepository
 ) {
 

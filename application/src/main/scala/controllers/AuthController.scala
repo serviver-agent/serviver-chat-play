@@ -5,16 +5,23 @@ import play.api.mvc._
 
 import play.api.i18n.{Lang, I18nSupport}
 
-import models.{UserId, UserToken, UserTokenRepository}
+import models.user.{UserAuth, UserToken}
+import models.user.service.{UserAuthService, UserTokenService}
+import auth.UserRefiner
+
 import utils.FormUtils._
 import utils.CirceUtils._
+import utils.OptionUtils.MyOption
 import io.circe.{Json, Encoder}
+import io.circe.generic.auto._
 import io.circe.syntax._
 
 @Singleton
 class AuthController @Inject() (
     cc: ControllerComponents,
-    userTokenRepository: UserTokenRepository
+    userAuthService: UserAuthService,
+    userTokenService: UserTokenService,
+    userRefiner: UserRefiner
 ) extends AbstractController(cc)
     with I18nSupport {
 
@@ -22,45 +29,42 @@ class AuthController @Inject() (
 
   import AuthController._
 
-  def login() = Action { request =>
-    bindFromRequest(AuthLoginRequest.form)(request).left
-      .map(badForm => BadRequest(badForm.errorsAsJson))
-      .map { form =>
-        val userId: UserId = ??? // FIXMe
-        val userToken      = userTokenRepository.create(userId)
-        val response       = AuthLoginResponse(userToken)
-        Ok(response.asJson)
+  def login() = Action { httpRequest =>
+    val e = for {
+      userAuth <- bindFromRequest(authLoginForm)(httpRequest).left.map { badForm =>
+        BadRequest(badForm.errorsAsJson)
       }
-      .merge
+      verifiedUserId <- userAuthService.authenticate(userAuth).toEither(Unauthorized)
+    } yield {
+      val verifiedUserToken = userTokenService.create(verifiedUserId)
+      val response = AuthLoginResponse.fromToken(verifiedUserToken)
+      Ok(response.asJson)
+    }
+    e.merge
   }
 
-  def logout() = Action {
-    InternalServerError
+  def logout() = cc.actionBuilder.andThen(userRefiner) { userRequest =>
+    userTokenService.deleteBy(userRequest.userId)
+    Ok
   }
 
 }
 
 object AuthController {
 
-  case class AuthLoginRequest(email: String, rawPassword: String)
-  object AuthLoginRequest {
-    import play.api.data.Form
-    import play.api.data.Forms._
+  import play.api.data.Form
+  import play.api.data.Forms._
 
-    val form: Form[AuthLoginRequest] = Form(
-      mapping(
-        "email"       -> email,
-        "rawPassword" -> nonEmptyText(minLength = 1, maxLength = 32)
-      )(AuthLoginRequest.apply)(AuthLoginRequest.unapply)
-    )
-  }
+  val authLoginForm: Form[UserAuth] = Form(
+    mapping(
+      "email"       -> email,
+      "rawPassword" -> nonEmptyText(minLength = 8, maxLength = 32)
+    )(UserAuth.createFromRawPassword)(UserAuth.passwordHiddenUnapply)
+  )
 
-  case class AuthLoginResponse(token: UserToken)
-  implicit val userTokenEncoder: Encoder[UserToken] = Encoder[String].contramap(_.display)
-  implicit val authLoginResponseEncoder: Encoder[AuthLoginResponse] = Encoder.instance { response =>
-    Json.obj(
-      "token" -> response.token.asJson
-    )
+  case class AuthLoginResponse(token: String)
+  object AuthLoginResponse {
+    def fromToken(token: UserToken) = AuthLoginResponse(token.display)
   }
 
 }

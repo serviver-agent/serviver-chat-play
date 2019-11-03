@@ -11,8 +11,13 @@ object UserAuth {
     Email(emailStr),
     HashedPassword.fromRawPassword(rawPassword)
   )
+  def passwordHiddenUnapply(userAuth: UserAuth): Option[(String, String)] = {
+    Some((userAuth.email.display, "************"))
+  }
 
-  case class Email(value: String)
+  case class Email(value: String) {
+    final def display: String = value
+  }
   case class HashedPassword(value: String)
   object HashedPassword {
     import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
