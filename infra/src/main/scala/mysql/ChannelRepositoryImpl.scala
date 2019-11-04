@@ -7,8 +7,6 @@ import infra.mysql.tables.{ChannelRecord, ChannelsTable}
 
 class ChannelRepositoryImpl extends ChannelRepository {
 
-  val c = ChannelsTable.defaultAlias
-
   def findAll(): List[Channel] = {
     ChannelsTable.findAll().map(_.toEntity)
   }
