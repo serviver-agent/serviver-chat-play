@@ -18,7 +18,7 @@ class UserAuthRepositoryImpl extends UserAuthRepository {
         sqls
           .eq(UserAuthsTable.column.email, userAuth.email.display)
           .and
-          .eq(UserAuthsTable.column.hashedPassword, userAuth.hashedPassword.display)
+          .eq(UserAuthsTable.column.hashed_password, userAuth.hashedPassword.display)
       )
       .map(_.userIdToEntity)
   }

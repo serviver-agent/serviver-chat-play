@@ -4,18 +4,18 @@ import java.util.UUID
 import models.user.{UserId, VerifiedUserId, UserAuth}
 
 case class UserAuthRecord(
-    userId: String,
+    user_id: String,
     email: String,
-    hashedPassword: String
+    hashed_password: String
 ) {
   def toEntity: (VerifiedUserId, UserAuth) = {
-    val verifiedUserId = VerifiedUserId(UUID.fromString(userId))
-    val userAuth       = UserAuth.create(email, hashedPassword)
+    val verifiedUserId = VerifiedUserId(UUID.fromString(user_id))
+    val userAuth       = UserAuth.create(email, hashed_password)
     (verifiedUserId, userAuth)
   }
 
   def userIdToEntity: VerifiedUserId = {
-    VerifiedUserId(UUID.fromString(userId))
+    VerifiedUserId(UUID.fromString(user_id))
   }
 }
 
