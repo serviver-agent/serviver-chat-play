@@ -4,11 +4,11 @@ import java.util.UUID
 import models.user.{GeneratedUserToken, VerifiedUserId}
 
 case class UserTokenRecord(
-    userToken: String,
-    userId: String
+    user_token: String,
+    user_id: String
 ) {
   def userIdToEntity: VerifiedUserId = {
-    VerifiedUserId(UUID.fromString(userId))
+    VerifiedUserId(UUID.fromString(user_id))
   }
 }
 object UserTokenRecord {

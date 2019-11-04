@@ -16,7 +16,7 @@ class UserTokenRepositoryImpl extends UserTokenRepository {
     val record     = UserTokenRecord.createWithRandomToken(userId)
     val parameters = UserTokensTable.columnsAndValues(record)
     UserTokensTable.createWithAttributes(parameters: _*)
-    VerifiedUserToken(record.userToken)
+    VerifiedUserToken(record.user_token)
   }
 
   override def delete(userToken: UserToken): Unit = {
@@ -24,7 +24,7 @@ class UserTokenRepositoryImpl extends UserTokenRepository {
   }
 
   override def deleteBy(userId: VerifiedUserId): Unit = {
-    UserTokensTable.deleteBy(sqls.eq(UserTokensTable.column.userId, userId.display))
+    UserTokensTable.deleteBy(sqls.eq(UserTokensTable.column.user_id, userId.display))
   }
 
 }
