@@ -35,7 +35,12 @@ class UserAuthsTableSpec extends FlatSpec with Matchers with AutoRollback with T
       hashed_password = "thisishashedpassword04"
     )
     val parameters = UserAuthsTable.columnsAndValues(insertRecord)
-    UserAuthsTable.createWithAttributes(parameters: _*)
+    // UserAuthsTable.createWithAttributes(parameters: _*)
+    UserAuthsTable.createWithAttributes(
+      Symbol("user_id")         -> "4e7015a4-0000-0000-0000-000000000004",
+      Symbol("email")          -> "user_04@example.com",
+      Symbol("hashed_password") -> "thisishashedpassword04"
+    )
 
     val userId = UnverifiedUserId.fromString("4e7015a4-0000-0000-0000-000000000004")
     val recordOption = UserAuthsTable.findById(userId)

@@ -14,10 +14,11 @@ object UserAuthsTable extends SkinnyCRUDMapperWithId[UserId, UserAuthRecord] {
   override def extract(rs: WrappedResultSet, rn: ResultName[UserAuthRecord]): UserAuthRecord = autoConstruct(rs, rn)
   override def idToRawValue(userId: UserId)                                                  = userId.display
   override def rawValueToId(value: Any)                                                      = VerifiedUserId(UUID.fromString(value.toString))
+  override def useExternalIdGenerator                                                        = true
 
   def columnsAndValues(record: UserAuthRecord) = List(
     Symbol("user_id")         -> record.user_id,
-    Symbol("email")          -> record.email,
+    Symbol("email")           -> record.email,
     Symbol("hashed_password") -> record.hashed_password
   )
 }

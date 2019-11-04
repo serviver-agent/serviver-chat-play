@@ -14,6 +14,7 @@ object UserInfosTable extends SkinnyCRUDMapperWithId[UserId, UserInfoRecord] {
   override def extract(rs: WrappedResultSet, rn: ResultName[UserInfoRecord]): UserInfoRecord = autoConstruct(rs, rn)
   override def idToRawValue(userId: UserId)                                                  = userId.display
   override def rawValueToId(value: Any)                                                      = VerifiedUserId(UUID.fromString(value.toString))
+  override def useExternalIdGenerator                                                        = true
 
   def columnsAndValues(record: UserInfoRecord) = List(
     Symbol("userId")   -> record.userId,

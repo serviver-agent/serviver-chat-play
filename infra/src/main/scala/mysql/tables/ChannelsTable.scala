@@ -14,6 +14,7 @@ object ChannelsTable extends SkinnyCRUDMapperWithId[ChannelId, ChannelRecord] {
   override def extract(rs: WrappedResultSet, rn: ResultName[ChannelRecord]): ChannelRecord = autoConstruct(rs, rn)
   override def idToRawValue(channelId: ChannelId)                                          = channelId.display
   override def rawValueToId(value: Any)                                                    = ChannelId(UUID.fromString(value.toString))
+  override def useExternalIdGenerator                                                      = true
 
   def columnsAndValues(record: ChannelRecord) = List(
     Symbol("id")   -> record.id,
