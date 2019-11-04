@@ -4,13 +4,13 @@ import java.util.UUID
 import models.user.{UserId, VerifiedUserId, UserInfo}
 
 case class UserInfoRecord(
-    userId: String,
-    userName: String,
-    imageUrl: String
+    user_id: String,
+    user_name: String,
+    image_url: String
 ) {
   def toEntity: (VerifiedUserId, UserInfo) = {
-    val verifiedUserId = VerifiedUserId(UUID.fromString(userId))
-    val userInfo       = UserInfo.create(userName, imageUrl)
+    val verifiedUserId = VerifiedUserId(UUID.fromString(user_id))
+    val userInfo       = UserInfo.create(user_name, image_url)
     (verifiedUserId, userInfo)
   }
 }

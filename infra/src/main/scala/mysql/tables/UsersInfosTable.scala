@@ -7,9 +7,9 @@ import scalikejdbc._
 import skinny.orm.SkinnyCRUDMapperWithId
 
 object UserInfosTable extends SkinnyCRUDMapperWithId[UserId, UserInfoRecord] {
-  override lazy val tableName           = "UserInfos"
+  override lazy val tableName           = "user_infos"
   override lazy val defaultAlias        = createAlias("ui")
-  override lazy val primaryKeyFieldName = "id"
+  override lazy val primaryKeyFieldName = "user_id"
 
   override def extract(rs: WrappedResultSet, rn: ResultName[UserInfoRecord]): UserInfoRecord = autoConstruct(rs, rn)
   override def idToRawValue(userId: UserId)                                                  = userId.display
@@ -17,13 +17,13 @@ object UserInfosTable extends SkinnyCRUDMapperWithId[UserId, UserInfoRecord] {
   override def useExternalIdGenerator                                                        = true
 
   def columnsAndValues(record: UserInfoRecord) = List(
-    Symbol("userId")   -> record.userId,
-    Symbol("userName") -> record.userName,
-    Symbol("imageUrl") -> record.imageUrl
+    Symbol("user_id")   -> record.user_id,
+    Symbol("user_name") -> record.user_name,
+    Symbol("image_url") -> record.image_url
   )
 
   def updateAttributes(record: UserInfoRecord) = List(
-    Symbol("userName") -> record.userName,
-    Symbol("imageUrl") -> record.imageUrl
+    Symbol("user_name") -> record.user_name,
+    Symbol("image_url") -> record.image_url
   )
 }

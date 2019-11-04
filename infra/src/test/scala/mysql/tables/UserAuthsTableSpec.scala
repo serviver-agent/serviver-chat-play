@@ -46,15 +46,15 @@ class UserAuthsTableSpec extends FlatSpec with Matchers with AutoRollback with T
   it should "update" in { implicit session =>
     val userId = UnverifiedUserId.fromString("4e7015a4-0000-0000-0000-000000000003")
     UserAuthsTable.updateById(userId).withAttributes(
-      Symbol("email")           -> "user_02_changed@example.com",
-      Symbol("hashed_password") -> "newpassword02"
+      Symbol("email")           -> "user_03_changed@example.com",
+      Symbol("hashed_password") -> "newpassword03"
     )
     val updatedRecordOption = UserAuthsTable.findById(userId)
 
     val answer = Some(UserAuthRecord(
       user_id = "4e7015a4-0000-0000-0000-000000000003",
-      email = "user_02_changed@example.com",
-      hashed_password = "newpassword02"
+      email = "user_03_changed@example.com",
+      hashed_password = "newpassword03"
     ))
 
     updatedRecordOption shouldBe answer
