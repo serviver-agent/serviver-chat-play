@@ -31,6 +31,70 @@ $ http get localhost:9000/health
 * https://github.com/serviver-agent/serviver-chat-play/blob/master/conf/routes
 * https://github.com/serviver-agent/serviver-chat-play/tree/master/application/src/main/scala/controllers
 
+### ユーザーの作成
+
+```
+$ http -v put localhost:9000/users userName="みやしー" imageUrl="http://www.example.com/img.jpg" email="miy@example.com" rawPassword="password"
+
+PUT /users HTTP/1.1
+Accept: application/json, */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Content-Length: 141
+Content-Type: application/json
+Host: localhost:9000
+User-Agent: HTTPie/1.0.0
+
+{
+    "email": "miy@example.com",
+    "imageUrl": "http://www.example.com/img.jpg",
+    "rawPassword": "password",
+    "userName": "みやしー"
+}
+
+HTTP/1.1 200 OK
+Content-Length: 0
+Date: Mon, 04 Nov 2019 14:50:09 GMT
+Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: master-only
+X-XSS-Protection: 1; mode=block
+```
+
+### ユーザーの一覧取得
+
+```
+$ http -v get localhost:9000/users
+GET /users HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Host: localhost:9000
+User-Agent: HTTPie/1.0.0
+
+HTTP/1.1 200 OK
+Content-Length: 288
+Content-Type: application/json
+Date: Mon, 04 Nov 2019 14:51:22 GMT
+Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: master-only
+X-XSS-Protection: 1; mode=block
+
+[
+    {
+        "id": "18ae995f-59a1-4075-a150-c96b355a5227",
+        "imageUrl": "http://www.example.com/img.jpg",
+        "userName": "みやしー"
+    }
+]
+```
+
+### ログイン
+
+* まだできてない
 
 ## テスト
 
