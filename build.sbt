@@ -47,6 +47,7 @@ lazy val infra = (project in file("infra"))
     libraryDependencies += scalatest % Test,
     libraryDependencies += mysql,
     libraryDependencies ++= scalikejdbc,
+    libraryDependencies += skinnyOrm,
     libraryDependencies += awsJavaSdkDynamoDB,
   )
   .dependsOn(

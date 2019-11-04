@@ -10,6 +10,7 @@ object Dependencies {
     "org.scalikejdbc" %% "scalikejdbc-config" % "3.3.5",
     "org.scalikejdbc" %% "scalikejdbc-play-dbapi-adapter" % "2.7.1-scalikejdbc-3.3"
   )
+  lazy val skinnyOrm = "org.skinny-framework" %% "skinny-orm" % "3.0.3"
   lazy val awsJavaSdkDynamoDB = "com.amazonaws" % "aws-java-sdk" % "1.11.664"
   lazy val circe = Seq(
     "io.circe" %% "circe-core" % "0.12.0-M3",
