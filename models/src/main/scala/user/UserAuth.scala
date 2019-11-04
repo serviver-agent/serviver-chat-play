@@ -7,6 +7,11 @@ case class UserAuth(
 
 object UserAuth {
 
+  def create(emailStr: String, hashedPasswordStr: String) = UserAuth(
+    Email(emailStr),
+    HashedPassword(hashedPasswordStr)
+  )
+
   def createFromRawPassword(emailStr: String, rawPassword: String) = UserAuth(
     Email(emailStr),
     HashedPassword.fromRawPassword(rawPassword)
@@ -18,7 +23,9 @@ object UserAuth {
   case class Email(value: String) {
     final def display: String = value
   }
-  case class HashedPassword(value: String)
+  case class HashedPassword(value: String) {
+    final def display: String = value
+  }
   object HashedPassword {
     import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
     private val bcrypt = new BCryptPasswordEncoder()
