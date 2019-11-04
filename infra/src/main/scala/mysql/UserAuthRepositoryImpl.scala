@@ -6,7 +6,11 @@ import models.user._
 import infra.mysql.tables.{UserAuthRecord, UserAuthsTable}
 import scalikejdbc._
 
+import scala.util.Try
+
 class UserAuthRepositoryImpl extends UserAuthRepository {
+
+  import UserAuthRepository._
 
   override def findBy(userId: UnverifiedUserId): Option[(VerifiedUserId, UserAuth)] = {
     UserAuthsTable.findById(userId).map(_.toEntity)
@@ -23,11 +27,19 @@ class UserAuthRepositoryImpl extends UserAuthRepository {
       .map(_.userIdToEntity)
   }
 
-  override def create(userId: GeneratedUserId, userAuth: UserAuth): Either[Exception, Unit] = {
-    val record     = UserAuthRecord.fromEntity(userId, userAuth)
-    val parameters = UserAuthsTable.columnsAndValues(record)
-    UserAuthsTable.createWithAttributes(parameters: _*)
-    Right()
+  override def create(userId: GeneratedUserId, userAuth: UserAuth): Either[CreateError, VerifiedUserId] = {
+    import java.sql.SQLIntegrityConstraintViolationException
+
+    Try {
+      val record     = UserAuthRecord.fromEntity(userId, userAuth)
+      val parameters = UserAuthsTable.columnsAndValues(record)
+      UserAuthsTable.createWithAttributes(parameters: _*)
+      VerifiedUserId(userId.value)
+    }.toEither.left
+      .map {
+        case e: SQLIntegrityConstraintViolationException => DuplicateUserError(e)
+        case e                                           => UnknownError(e)
+      }
   }
 
 }

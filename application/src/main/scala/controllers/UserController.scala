@@ -47,10 +47,11 @@ class UserController @Inject() (
       userCreateRequest <- bindFromRequest(createUserForm)(httpRequest).left.map { badForm =>
         BadRequest(badForm.errorsAsJson)
       }
-      _ <- userRegisterService.create(userCreateRequest).left.map { _ =>
+      userId <- userRegisterService.create(userCreateRequest).left.map { e =>
+        e.printStackTrace()
         InternalServerError
       }
-    } yield Ok
+    } yield Ok(CreateUserResponse(userId.display).asJson)
     e.merge
   }
 
@@ -87,5 +88,7 @@ object UserController {
       "rawPassword" -> nonEmptyText(minLength = 8, maxLength = 64)
     )(UserCreateRequest.apply)(UserCreateRequest.unapply)
   )
+
+  case class CreateUserResponse(userId: String)
 
 }

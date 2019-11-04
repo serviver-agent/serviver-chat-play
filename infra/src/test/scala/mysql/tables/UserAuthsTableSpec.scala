@@ -5,7 +5,7 @@ import scalikejdbc.scalatest.AutoRollback
 import org.scalatest.fixture.FlatSpec
 import org.scalatest._
 
-import models.user.UnverifiedUserId
+import models.user.{UnverifiedUserId, GeneratedUserId}
 
 class UserAuthsTableSpec extends FlatSpec with Matchers with AutoRollback with TestDBSettings {
 
@@ -66,6 +66,28 @@ class UserAuthsTableSpec extends FlatSpec with Matchers with AutoRollback with T
 
     UserAuthsTable.deleteById(userId)
     UserAuthsTable.findById(userId).isDefined shouldBe false
+  }
+
+  it should "not register duplicate email addresses" in { implicit session =>
+    import java.sql.SQLIntegrityConstraintViolationException
+
+    val insertRecord1 = UserAuthRecord(
+      user_id = GeneratedUserId.create().display,
+      email = "user_05@example.com",
+      hashed_password = "password"
+    )
+    val parameters1 = UserAuthsTable.columnsAndValues(insertRecord1)
+    UserAuthsTable.createWithAttributes(parameters1: _*)
+
+    val insertRecord2 = UserAuthRecord(
+      user_id = GeneratedUserId.create().display,
+      email = "user_05@example.com",
+      hashed_password = "password"
+    )
+    val parameters2 = UserAuthsTable.columnsAndValues(insertRecord2)
+    assertThrows[SQLIntegrityConstraintViolationException] {
+      UserAuthsTable.createWithAttributes(parameters2: _*)
+    }
   }
 
 }

@@ -13,15 +13,15 @@ class UserRegisterService @Inject() (
 
   import UserRegisterService._
 
-  def create(request: UserCreateRequest): Either[Exception, Unit] = {
+  def create(request: UserCreateRequest): Either[Exception, VerifiedUserId] = {
     val generatedUserId = GeneratedUserId.create()
     val userAuth        = UserAuth.createFromRawPassword(request.email, request.rawPassword)
     val userInfo        = UserInfo.create(request.userName, request.imageUrl)
 
     for {
       _ <- userAuthRepository.create(generatedUserId, userAuth)
-      _ <- userInfoRepository.create(generatedUserId, userInfo)
-    } yield ()
+      userId <- userInfoRepository.create(generatedUserId, userInfo)
+    } yield userId
   }
 
 }

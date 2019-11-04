@@ -60,6 +60,10 @@ X-Content-Type-Options: nosniff
 X-Frame-Options: DENY
 X-Permitted-Cross-Domain-Policies: master-only
 X-XSS-Protection: 1; mode=block
+
+{
+    "userId": "18ae995f-59a1-4075-a150-c96b355a5227"
+}
 ```
 
 ### ユーザーの一覧取得
