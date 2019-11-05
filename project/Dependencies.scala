@@ -20,4 +20,5 @@ object Dependencies {
   )
   lazy val javaxInject = "javax.inject" % "javax.inject" % "1"
   lazy val springSecurityWeb = "org.springframework.security" % "spring-security-web" % "5.2.0.RELEASE"
+  lazy val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.3" % "provided"
 }

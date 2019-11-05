@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play",
-    libraryDependencies += guice,
+    libraryDependencies += macwire,
   )
   .dependsOn(
     models,
