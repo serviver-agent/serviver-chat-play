@@ -1,4 +1,4 @@
-package application.auth
+package adapter.auth
 
 import play.api.mvc.{Request, WrappedRequest}
 import entity.user.VerifiedUserId

@@ -1,4 +1,4 @@
-package application.configs
+package adapter.configs
 
 import javax.inject.{Singleton, Inject}
 import play.api.Configuration

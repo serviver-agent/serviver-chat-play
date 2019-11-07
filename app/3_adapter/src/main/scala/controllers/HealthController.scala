@@ -1,9 +1,9 @@
-package application.controllers
+package adapter.controllers
 
 import javax.inject._
 import play.api.mvc._
 
-import application.utils.HealthChecker
+import adapter.utils.HealthChecker
 
 @Singleton
 class HealthController @Inject() (

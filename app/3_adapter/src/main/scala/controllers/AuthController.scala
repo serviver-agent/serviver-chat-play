@@ -1,4 +1,4 @@
-package application.controllers
+package adapter.controllers
 
 import javax.inject._
 import play.api.mvc._
@@ -7,11 +7,11 @@ import play.api.i18n.{Lang, I18nSupport}
 
 import entity.user.{UserAuth, UserToken}
 import entity.user.service.{UserAuthService, UserTokenService}
-import application.auth.UserRefiner
+import adapter.auth.UserRefiner
 
-import application.utils.FormUtils._
-import application.utils.CirceUtils._
-import application.utils.OptionUtils.MyOption
+import adapter.utils.FormUtils._
+import adapter.utils.CirceUtils._
+import adapter.utils.OptionUtils.MyOption
 import io.circe.{Json, Encoder}
 import io.circe.generic.auto._
 import io.circe.syntax._

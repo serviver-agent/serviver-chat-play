@@ -1,6 +1,6 @@
 package infra.mysql.common
 
-import application.utils.HealthChecker
+import adapter.utils.HealthChecker
 
 import scalikejdbc._
 import scalikejdbc.config._

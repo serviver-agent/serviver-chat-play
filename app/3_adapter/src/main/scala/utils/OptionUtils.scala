@@ -1,4 +1,4 @@
-package application.utils
+package adapter.utils
 
 object OptionUtils {
 

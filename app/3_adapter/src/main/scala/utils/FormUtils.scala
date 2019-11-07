@@ -1,4 +1,4 @@
-package application.utils
+package adapter.utils
 
 import play.api.mvc._
 import play.api.data._

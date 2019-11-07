@@ -1,4 +1,4 @@
-package application.auth
+package adapter.auth
 
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import entity.user.service.UserTokenService
 
 import play.api.mvc.Results
 
-import application.utils.OptionUtils.MyOption
+import adapter.utils.OptionUtils.MyOption
 
 class UserRefiner @Inject() (
     ec: ExecutionContext,
@@ -41,7 +41,7 @@ object UserRefiner {
 
     Result(
       ResponseHeader(400),
-      HttpEntity.Strict(ByteString("Token not found in header Authorization."), Some("application/json"))
+      HttpEntity.Strict(ByteString("Token not found in header Authorization."), Some("adapter/json"))
     )
   }
 
@@ -52,7 +52,7 @@ object UserRefiner {
 
     Result(
       ResponseHeader(401),
-      HttpEntity.Strict(ByteString("Invalid Token"), Some("application/json"))
+      HttpEntity.Strict(ByteString("Invalid Token"), Some("adapter/json"))
     )
   }
 
