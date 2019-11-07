@@ -1,4 +1,4 @@
-package models.user
+package entity.user
 
 case class UserInfo(
     userName: UserInfo.UserName,

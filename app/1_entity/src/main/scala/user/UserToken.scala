@@ -1,4 +1,4 @@
-package models.user
+package entity.user
 
 sealed trait UserToken {
   def value: String

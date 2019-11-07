@@ -1,7 +1,7 @@
 package infra.mysql.tables
 
 import java.util.UUID
-import models.user.{GeneratedUserToken, VerifiedUserId}
+import entity.user.{GeneratedUserToken, VerifiedUserId}
 
 case class UserTokenRecord(
     user_token: String,

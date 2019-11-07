@@ -1,7 +1,7 @@
 package infra.mysql.tables
 
 import java.util.UUID
-import models.user.{UserId, VerifiedUserId, UserAuth}
+import entity.user.{UserId, VerifiedUserId, UserAuth}
 
 case class UserAuthRecord(
     user_id: String,

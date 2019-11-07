@@ -1,9 +1,9 @@
-package models.user.service
+package entity.user.service
 
 import javax.inject.{Singleton, Inject}
 
-import models.user._
-import models.user.repository._
+import entity.user._
+import entity.user.repository._
 
 @Singleton
 class UserTokenService @Inject() (

@@ -1,7 +1,7 @@
 package infra.mysql.tables
 
 import java.util.UUID
-import models.channel.ChannelId
+import entity.channel.ChannelId
 
 import scalikejdbc._
 import skinny.orm.SkinnyCRUDMapperWithId

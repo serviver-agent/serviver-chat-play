@@ -1,7 +1,7 @@
 package infra.mysql.tables
 
 import java.util.UUID
-import models.channel.{Channel, ChannelId}
+import entity.channel.{Channel, ChannelId}
 
 case class ChatChannelRecord(
     channel_id: String,

@@ -5,8 +5,8 @@ import javax.inject.Inject
 import play.api.mvc.{Request, Result, ActionRefiner}
 import scala.concurrent.{Future, ExecutionContext}
 
-import models.user.{UnverifiedUserToken, VerifiedUserId}
-import models.user.service.UserTokenService
+import entity.user.{UnverifiedUserToken, VerifiedUserId}
+import entity.user.service.UserTokenService
 
 import play.api.mvc.Results
 

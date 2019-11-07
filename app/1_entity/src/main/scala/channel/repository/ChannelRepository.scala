@@ -1,6 +1,6 @@
-package models.channel.repository
+package entity.channel.repository
 
-import models.channel._
+import entity.channel._
 
 trait ChannelRepository {
   def findAll(): List[Channel]

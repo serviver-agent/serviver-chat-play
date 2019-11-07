@@ -5,8 +5,8 @@ import infra.dynamo.common.DynamoDBFactory
 
 import java.util.UUID
 
-import models.user._
-import models.user.repository.UserTokenRepository
+import entity.user._
+import entity.user.repository.UserTokenRepository
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB
 

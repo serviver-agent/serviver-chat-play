@@ -1,7 +1,7 @@
 package infra.mysql
 
-import models.user._
-import models.user.repository.UserTokenRepository
+import entity.user._
+import entity.user.repository.UserTokenRepository
 
 import infra.mysql.tables.{UserTokenRecord, UserTokensTable}
 import scalikejdbc._

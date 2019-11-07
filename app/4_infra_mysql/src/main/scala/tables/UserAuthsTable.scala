@@ -1,7 +1,7 @@
 package infra.mysql.tables
 
 import java.util.UUID
-import models.user.{UserId, VerifiedUserId}
+import entity.user.{UserId, VerifiedUserId}
 
 import scalikejdbc._
 import skinny.orm.SkinnyCRUDMapperWithId

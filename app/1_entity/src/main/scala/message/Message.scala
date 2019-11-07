@@ -1,7 +1,7 @@
-package models.message
+package entity.message
 
 import java.util.UUID
-import models.user.VerifiedUserId
+import entity.user.VerifiedUserId
 
 case class MessageId(uuid: UUID) {
   def display = uuid.toString

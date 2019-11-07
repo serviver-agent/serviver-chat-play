@@ -1,7 +1,7 @@
 package infra.mysql
 
-import models.user.repository.UserAuthRepository
-import models.user._
+import entity.user.repository.UserAuthRepository
+import entity.user._
 
 import infra.mysql.tables.{UserAuthRecord, UserAuthsTable}
 import scalikejdbc._

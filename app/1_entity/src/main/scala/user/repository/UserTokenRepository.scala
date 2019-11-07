@@ -1,6 +1,6 @@
-package models.user.repository
+package entity.user.repository
 
-import models.user._
+import entity.user._
 
 trait UserTokenRepository {
   def findBy(userToken: UnverifiedUserToken): Option[VerifiedUserId]

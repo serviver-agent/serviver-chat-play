@@ -1,6 +1,6 @@
 package infra.mysql.tables
 
-import models.user.{UserToken, VerifiedUserToken}
+import entity.user.{UserToken, VerifiedUserToken}
 
 import scalikejdbc._
 import skinny.orm.SkinnyCRUDMapperWithId

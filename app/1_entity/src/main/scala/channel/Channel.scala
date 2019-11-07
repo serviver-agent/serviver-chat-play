@@ -1,4 +1,4 @@
-package models.channel
+package entity.channel
 
 import java.util.UUID
 

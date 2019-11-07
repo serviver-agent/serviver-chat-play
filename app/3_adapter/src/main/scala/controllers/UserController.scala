@@ -4,9 +4,9 @@ import javax.inject._
 import play.api.mvc._
 import play.api.i18n.{Lang, I18nSupport}
 
-import models.user._
-import models.user.service._
-import models.user.service.UserRegisterService.UserCreateRequest
+import entity.user._
+import entity.user.service._
+import entity.user.service.UserRegisterService.UserCreateRequest
 
 import application.utils.FormUtils._
 import application.utils.CirceUtils._

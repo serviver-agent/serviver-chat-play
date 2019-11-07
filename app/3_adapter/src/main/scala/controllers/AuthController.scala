@@ -5,8 +5,8 @@ import play.api.mvc._
 
 import play.api.i18n.{Lang, I18nSupport}
 
-import models.user.{UserAuth, UserToken}
-import models.user.service.{UserAuthService, UserTokenService}
+import entity.user.{UserAuth, UserToken}
+import entity.user.service.{UserAuthService, UserTokenService}
 import application.auth.UserRefiner
 
 import application.utils.FormUtils._

@@ -1,7 +1,7 @@
 package infra.mysql
 
-import models.channel.{Channel, ChannelId}
-import models.channel.repository.ChannelRepository
+import entity.channel.{Channel, ChannelId}
+import entity.channel.repository.ChannelRepository
 
 import infra.mysql.tables.{ChatChannelRecord, ChatChannelsTable}
 

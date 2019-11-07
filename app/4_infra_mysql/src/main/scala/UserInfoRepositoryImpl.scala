@@ -1,7 +1,7 @@
 package infra.mysql
 
-import models.user.repository.UserInfoRepository
-import models.user._
+import entity.user.repository.UserInfoRepository
+import entity.user._
 
 import infra.mysql.tables.{UserInfoRecord, UserInfosTable}
 import scalikejdbc._

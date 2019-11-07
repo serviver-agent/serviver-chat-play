@@ -3,10 +3,10 @@ import com.google.inject.AbstractModule
 import application.utils.HealthChecker
 import infra.mysql.common.HealthCheckerImpl
 
-import models.user.repository.{UserAuthRepository, UserInfoRepository, UserTokenRepository}
+import entity.user.repository.{UserAuthRepository, UserInfoRepository, UserTokenRepository}
 import infra.mysql.{UserAuthRepositoryImpl, UserInfoRepositoryImpl, UserTokenRepositoryImpl}
 
-import models.channel.repository.ChannelRepository
+import entity.channel.repository.ChannelRepository
 import infra.mysql.ChannelRepositoryImpl
 
 // import infra.dynamo.UserTokenRepositoryImpl
