@@ -22,7 +22,7 @@ lazy val root = (project in file("."))
     infra
   )
 
-lazy val entity = (project in file("app/0_entity"))
+lazy val entity = (project in file("app/1_entity"))
   .settings(
     name := "serviver-chat-play-models",
     libraryDependencies += scalatest % Test,
@@ -30,10 +30,10 @@ lazy val entity = (project in file("app/0_entity"))
     libraryDependencies += springSecurityWeb,
   )
 
-lazy val usecase = (project in file("app/1_usecase"))
+lazy val usecase = (project in file("app/2_usecase"))
   .dependsOn(entity)
 
-lazy val adapter = (project in file("app/2_adapter"))
+lazy val adapter = (project in file("app/3_adapter"))
   .settings(
     name := "serviver-chat-play-application",
     libraryDependencies += playframework,
@@ -45,7 +45,7 @@ lazy val adapter = (project in file("app/2_adapter"))
     usecase
   )
 
-lazy val mysql = (project in file("app/3_infra/mysql"))
+lazy val mysql = (project in file("app/4_infra/mysql"))
   .settings(
     name := "serviver-chat-play-infra",
     libraryDependencies += scalatest % Test,
@@ -60,7 +60,7 @@ lazy val mysql = (project in file("app/3_infra/mysql"))
     adapter
   )
 
-lazy val dynamodb = (project in file("app/3_infra/dynamodb"))
+lazy val dynamodb = (project in file("app/4_infra/dynamodb"))
   .settings(
     name := "serviver-chat-play-infra",
     libraryDependencies += scalatest % Test,
@@ -75,7 +75,7 @@ lazy val dynamodb = (project in file("app/3_infra/dynamodb"))
     adapter
   )
 
-lazy val injector = (project in file("app/4_injector"))
+lazy val injector = (project in file("app/5_injector"))
   .settings(
     name := "serviver-chat-play-injector",
     libraryDependencies += guice,
@@ -88,7 +88,7 @@ lazy val injector = (project in file("app/4_injector"))
     dynamodb
   )
 
-lazy val boot = (project in file("app/5_boot"))
+lazy val boot = (project in file("app/6_boot"))
   .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play-boot",
