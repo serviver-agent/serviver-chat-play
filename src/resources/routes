@@ -1,0 +1,22 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           adapter.controllers.HomeController.index
+GET     /health                     adapter.controllers.HealthController.check
+
+POST    /auth/login                 adapter.controllers.AuthController.login
+POST    /auth/logout                adapter.controllers.AuthController.logout
+
+GET     /users                      adapter.controllers.UserController.findAll
+GET     /users/:id                  adapter.controllers.UserController.findBy(id: String)
+PUT     /users                      adapter.controllers.UserController.create
+
+GET     /channels                   adapter.controllers.ChannelController.all
+GET     /channels/:id               adapter.controllers.ChannelController.show(id: String)
+PUT     /channels                   adapter.controllers.ChannelController.create
+
+GET     /channels/:channelId/messages      adapter.controllers.MessageController.getMessages(channelId: String)
+PUT     /channels/:channelId/messages      adapter.controllers.MessageController.post(channelId: String)

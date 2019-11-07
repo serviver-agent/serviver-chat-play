@@ -8,8 +8,13 @@ scalacOptions ++= "-deprecation" :: "-feature" :: "-Xlint" :: Nil
 scalacOptions in (Compile, console) ~= {_.filterNot(_ == "-Xlint")}
 
 lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  // .disablePlugins(PlayLayoutPlugin)
   .settings(
     name := "serviver-chat-play",
+    // javaOptions in Runtime += "-Dconfig.resource=src/resources/application.conf",
+    // javaOptions in Runtime += "-Dapplication.router=src/resources/routes"
+    // confDirectory := "src/resources" 
   )
   .dependsOn(
     entity,
@@ -93,7 +98,6 @@ lazy val injector = (project in file("app/5_injector"))
   )
 
 lazy val boot = (project in file("app/6_boot"))
-  .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play-boot",
   )
