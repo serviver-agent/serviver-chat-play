@@ -12,14 +12,22 @@ lazy val root = (project in file("."))
     name := "serviver-chat-play",
   )
   .dependsOn(
-    models,
-    application,
-    infra
+    entity,
+    usecase,
+    adapter,
+    mysql,
+    dynamodb,
+    injector,
+    boot
   )
   .aggregate(
-    models,
-    application,
-    infra
+    entity,
+    usecase,
+    adapter,
+    mysql,
+    dynamodb,
+    injector,
+    boot
   )
 
 lazy val entity = (project in file("app/1_entity"))
@@ -45,14 +53,13 @@ lazy val adapter = (project in file("app/3_adapter"))
     usecase
   )
 
-lazy val mysql = (project in file("app/4_infra/mysql"))
+lazy val mysql = (project in file("app/4_infra_mysql"))
   .settings(
     name := "serviver-chat-play-infra",
     libraryDependencies += scalatest % Test,
-    libraryDependencies += mysql,
+    libraryDependencies += mysqlConnector,
     libraryDependencies ++= scalikejdbc,
     libraryDependencies += skinnyOrm,
-    libraryDependencies += awsJavaSdkDynamoDB,
   )
   .dependsOn(
     entity,
@@ -60,13 +67,10 @@ lazy val mysql = (project in file("app/4_infra/mysql"))
     adapter
   )
 
-lazy val dynamodb = (project in file("app/4_infra/dynamodb"))
+lazy val dynamodb = (project in file("app/4_infra_dynamodb"))
   .settings(
     name := "serviver-chat-play-infra",
     libraryDependencies += scalatest % Test,
-    libraryDependencies += mysql,
-    libraryDependencies ++= scalikejdbc,
-    libraryDependencies += skinnyOrm,
     libraryDependencies += awsJavaSdkDynamoDB,
   )
   .dependsOn(
