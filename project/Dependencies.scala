@@ -4,7 +4,7 @@ object Dependencies {
   lazy val scalatest = "org.scalatest" %% "scalatest" % "3.0.8"
   lazy val scalaTestPlusPlay = "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3"
   lazy val playframework = "com.typesafe.play" %% "play" % "2.7.3"
-  lazy val mysql = "mysql" % "mysql-connector-java" % "8.0.17"
+  lazy val mysqlConnector = "mysql" % "mysql-connector-java" % "8.0.17"
   lazy val scalikejdbc = Seq(
     "org.scalikejdbc" %% "scalikejdbc" % "3.3.5",
     "org.scalikejdbc" %% "scalikejdbc-config" % "3.3.5",
