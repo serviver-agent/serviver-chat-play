@@ -8,10 +8,8 @@ scalacOptions ++= "-deprecation" :: "-feature" :: "-Xlint" :: Nil
 scalacOptions in (Compile, console) ~= {_.filterNot(_ == "-Xlint")}
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala)
   .settings(
     name := "serviver-chat-play",
-    libraryDependencies += guice,
   )
   .dependsOn(
     models,
@@ -24,7 +22,7 @@ lazy val root = (project in file("."))
     infra
   )
 
-lazy val models = (project in file("models"))
+lazy val entity = (project in file("app/0_entity"))
   .settings(
     name := "serviver-chat-play-models",
     libraryDependencies += scalatest % Test,
@@ -32,16 +30,22 @@ lazy val models = (project in file("models"))
     libraryDependencies += springSecurityWeb,
   )
 
-lazy val application = (project in file("application"))
+lazy val usecase = (project in file("app/1_usecase"))
+  .dependsOn(entity)
+
+lazy val adapter = (project in file("app/2_adapter"))
   .settings(
     name := "serviver-chat-play-application",
     libraryDependencies += playframework,
     libraryDependencies += scalaTestPlusPlay % Test,
     libraryDependencies ++= circe,
   )
-  .dependsOn(models)
+  .dependsOn(
+    entity,
+    usecase
+  )
 
-lazy val infra = (project in file("infra"))
+lazy val mysql = (project in file("app/3_infra/mysql"))
   .settings(
     name := "serviver-chat-play-infra",
     libraryDependencies += scalatest % Test,
@@ -51,6 +55,49 @@ lazy val infra = (project in file("infra"))
     libraryDependencies += awsJavaSdkDynamoDB,
   )
   .dependsOn(
-    models,
-    application
+    entity,
+    usecase,
+    adapter
+  )
+
+lazy val dynamodb = (project in file("app/3_infra/dynamodb"))
+  .settings(
+    name := "serviver-chat-play-infra",
+    libraryDependencies += scalatest % Test,
+    libraryDependencies += mysql,
+    libraryDependencies ++= scalikejdbc,
+    libraryDependencies += skinnyOrm,
+    libraryDependencies += awsJavaSdkDynamoDB,
+  )
+  .dependsOn(
+    entity,
+    usecase,
+    adapter
+  )
+
+lazy val injector = (project in file("app/4_injector"))
+  .settings(
+    name := "serviver-chat-play-injector",
+    libraryDependencies += guice,
+  )
+  .dependsOn(
+    entity,
+    usecase,
+    adapter,
+    mysql,
+    dynamodb
+  )
+
+lazy val boot = (project in file("app/5_boot"))
+  .enablePlugins(PlayScala)
+  .settings(
+    name := "serviver-chat-play-boot",
+  )
+  .dependsOn(
+    entity,
+    usecase,
+    adapter,
+    mysql,
+    dynamodb,
+    injector
   )
